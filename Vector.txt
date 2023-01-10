@@ -1,0 +1,129 @@
+#include<iostream>
+#include<list>
+#include<vector>
+#include <algorithm>
+#include <set>
+using namespace std;
+void showList(list<int> ADT);
+bool IsMamber(int search ,list<int> ADT);
+void findUnion(list<int> ADT ,list<int> ADT2);
+void findIntersection(list<int> ADT ,list<int> ADT2);
+bool isSubset(list<int> ADT ,list<int> ADT2);
+main()
+{
+	// CREATE
+	list<int> ADT = {2 , 4 , 5 , 6 , 7 , 8};
+	cout << "\t\t -----------< List >-----------" <<endl;
+	showList(ADT);
+	
+	// INSERT
+	cout << "\t\t -----------< List After Insertion >-----------" <<endl;
+	cout << "Enter the insertion Value : ";
+	int insertVar;
+	cin >> insertVar;
+	list<int> :: iterator i = ADT.begin();
+	ADT.insert(i , insertVar);
+	showList(ADT);
+	
+	// DELETE
+	cout << "\t\t -----------< List After Deletion >-----------" <<endl;
+	cout << "Enter Number you want to Delete : ";
+	int deleteVar;
+	cin >> deleteVar;
+	ADT.remove(deleteVar);
+	showList(ADT);
+	
+	// IsMember
+ 	cout << "\t\t -----------< Memeber of List >-----------" <<endl;
+	cout << "Search from List : ";
+	int search;
+	cin >> search;
+	if(IsMamber(search , ADT))
+		cout << "Yes!" << " " << search << " " << "is the member of List" << endl;
+	else
+		cout << "No!" << " " << search << " " << "isn't' the member of List" << endl;
+		
+	// Union
+	cout << "\t\t -----------< Union of Lists >-----------" <<endl;		
+	cout << "Second List :" << endl;
+	list<int> ADT2 = {2, 3, 4, 5, 6, 7};
+	showList(ADT2);
+	cout << "Union List : " << endl;
+	findUnion(ADT , ADT2);
+	
+	// INTERSECTION
+	cout << "\t\t -----------< Intersection of Lists >-----------" <<endl;
+	findIntersection(ADT , ADT2);
+	
+	// SUBSET
+	if(isSubset(ADT , ADT2))
+		cout << "List one is Subset of List Two";
+	else
+		cout << "No subset";	
+}
+
+
+
+
+void showList(list<int> ADT)
+{
+	for(list<int>::iterator i = ADT.begin() ; i!=ADT.end() ; i++)
+	{
+		cout << *i << " ";
+	}
+	cout << endl;
+}
+bool IsMamber(int search , list<int> ADT)
+{
+	for(list<int>::iterator i = ADT.begin() ; i!=ADT.end() ; i++)
+	{
+		if(*i == search)
+			return true;
+	}
+	return false;
+}
+void findUnion(list<int> a ,list<int> b)
+{
+	vector<int> result; 
+	 set_union(begin(a), end(a),  
+                 begin(b), end(b),  
+                 inserter(result, end(result))); 
+                 
+    for_each(begin(result), end(result), [](int x) 
+	{  
+    	cout << x << " ";  
+	});
+	cout << endl;
+}
+
+void findIntersection(list<int> ADT ,list<int> ADT2)
+{
+	list<int> intersectionList;
+	for(list<int>::iterator i = ADT.begin() ; i!=ADT.end() ; i++)
+	{
+		for(list<int>::iterator j = ADT2.begin() ; j != ADT2.end() ; j++)
+		{
+			if(*i == *j)
+				intersectionList.insert(i , *j);
+		}
+	}
+	
+	showList(ADT);
+}
+bool isSubset(list<int> ADT ,list<int> ADT2)
+{
+	int count = 0;
+		for(list<int>::iterator i = ADT.begin() ; i!=ADT.end() ; i++)
+	{
+		for(list<int>::iterator j = ADT2.begin() ; j != ADT2.end() ; j++)
+		{
+			if(*i == *j)
+				count++;
+		}
+	}
+	if(count == ADT.size())
+		return true;
+	else
+		return false;	
+}
+
